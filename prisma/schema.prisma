@@ -1,0 +1,129 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["postgresqlExtensions"]
+}
+
+datasource db {
+  provider   = "postgresql"
+  url        = env("DATABASE_URL")
+  extensions = [vector]
+}
+
+model User {
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  imageUrl      String?
+  firstName     String?
+  lastName      String?
+  emailAddress  String          @unique
+  credits       Int             @default(150)
+  id            String          @id @default(uuid())
+  userToProject UserToProject[]
+  QuestionsAsked Question[]
+}
+
+model Project {
+  id                   String                @id @default(uuid())
+  createdAt            DateTime              @default(now())
+  updatedAt            DateTime              @updatedAt
+  name                 String
+  githubUrl            String?
+  deletedAt            DateTime?
+  commits              Commit[]
+  userToProject        UserToProject[]
+  sourceCodeEmbeddings SourceCodeEmbedding[]
+  savedQuestions      Question[]
+  meetings            Meeting[]
+}
+
+model UserToProject {
+  id        String   @id @default(uuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  projectId String
+  userId    String
+  project   Project  @relation(fields: [projectId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
+
+  @@unique([userId, projectId])
+}
+
+// model sourceCodeEmbedding {
+//   id               String                 @id @default(uuid())
+//   projectId        String
+//   fileName         String
+//   sourceCode       String
+//   summary          String
+//   summaryEmbedding Unsupported("vector")?
+//   project          Project                @relation(fields: [projectId], references: [id])
+  
+//    @@map("SourceCodeEmbedding") // 👈 This maps the model to the correct SQL table
+// }
+model SourceCodeEmbedding {
+  id               String   @id @default(uuid())
+  projectId        String
+  fileName         String
+  sourceCode       String
+  summary          String
+  summaryEmbedding Unsupported("vector(768)")?
+  project          Project  @relation(fields: [projectId], references: [id])
+
+  // @@map("sourcecodeembedding") // Keep original lowercase table name
+}
+
+model Meeting{
+  id               String   @id @default(uuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  name              String
+  meetingUrl       String
+  projectId        String
+  project          Project  @relation(fields: [projectId], references: [id])
+  status           MeetingStatus @default(PROCESSING)
+  issues           Issue[]
+}
+
+model Issue {
+  id                String   @id @default(uuid())
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+  start String
+  end   String
+  gist String
+  summary String
+  headline String
+  meetingId String
+  meeting Meeting @relation(fields: [meetingId], references: [id])
+}
+
+enum MeetingStatus {
+  PROCESSING
+  COMPLETED
+}
+
+model Question{
+  id                String   @id @default(uuid())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  question           String
+  answer             String
+  fileReferences     Json?
+  projectId          String
+  project            Project  @relation(fields: [projectId], references: [id])
+  userId             String
+  user               User     @relation(fields: [userId], references: [id])
+}
+
+model Commit {
+  id                 String   @id @default(uuid())
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  projectId          String
+  commitMessage      String
+  commitHash         String
+  commitAuthorName   String
+  commitAuthorAvatar String
+  commitDate         DateTime
+  summary            String
+  project            Project  @relation(fields: [projectId], references: [id])
+}
