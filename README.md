@@ -1,55 +1,54 @@
-### RepoGenie
+# RepoGenie 🧞‍♂️
 
-RepoGenie is your magical assistant for managing GitHub repositories faster and smarter. It helps developers generate, organize, and maintain their project structures with minimal effort.
+**RepoGenie** is an AI-powered tool that analyzes GitHub repositories to help developers quickly understand any project. Just paste in a repo URL, and RepoGenie will summarize commit histories and answer questions about the codebase — like magic.
 
-## Features
+## 🔍 Features
 
-- Generate clean project scaffolds instantly
-- Secure environment configuration support
-- Built-in integration with GitHub & version control
-- Modern tech stack: Next.js, TypeScript, Tailwind, Prisma
-- Customizable components for real-world production apps
+- 🔗 **GitHub Repo Analysis** – Enter any public GitHub URL and get instant commit summaries.
+- 🧠 **AI Q&A** – Ask questions about the code and architecture.
+- 📜 **Commit Summarization** – Clear, human-readable summaries of technical changes.
+- 🧰 **Built With Modern Stack** – Next.js, Tailwind CSS, TRPC, Prisma, and more.
+- ⚡ **Fast & Responsive UI** – Sleek interface optimized for performance and usability.
 
-## Tech Stack
+## 🚀 Tech Stack
 
-- Frontend: Next.js, TypeScript, Tailwind CSS
-- Backend: tRPC, Prisma, Node.js
-- Database: PostgreSQL / SQLite
-- Auth: Clerk 
+- **Frontend**: React, Next.js, Tailwind CSS
+- **Backend**: Node.js, tRPC, Prisma, OpenAI API
+- **Database**: PostgreSQL / PlanetScale
+- **Deployment**: Vercel
 
+## 📦 Installation
 
-## Installation
+```bash
+git clone https://github.com/Yashpatel2311/RepoGenie.git
+cd RepoGenie
+npm install
+```
 
-1. Clone the repo
-   git clone https://github.com/Yashpatel2311/RepoGenie.git
+## 🛠️ Usage
 
-2. Navigate into the project
-   cd RepoGenie
+1. Set your environment variables in `.env`:
+   ```
+   OPENAI_API_KEY=your_key_here
+   GITHUB_PAT=your_github_token
+   DATABASE_URL=your_database_url
+   ```
 
-3. Install dependencies
-   npm install
+2. Run the development server:
 
-## Environment Setup
+```bash
+npm run dev
+```
 
-Create a .env file based on .env.example
+3. Visit `http://localhost:3000` in your browser.
 
-Example:
-DATABASE_URL=your_database_url
-NEXT_PUBLIC_API_KEY=your_public_key
-
-## Scripts
-
-- npm run dev — Start the development server
-- npm run build — Build the production-ready app
-- npm run lint — Lint the codebase
-
-Screenshots
-
-<img width="1912" height="890" alt="RepoGenie" src="https://github.com/user-attachments/assets/80847d03-a733-4471-9b6a-082446769409" />
+<img width="1912" height="890" alt="RepoGenie" src="https://github.com/user-attachments/assets/14c3fb7c-6748-4b15-bf07-f006b4ccbeb2" />
 
 
-Contribution
+## 📄 License
 
-Feel free to fork, submit issues or pull requests. Help improve RepoGenie for the community!
+MIT © 2025 [Yash Patel](https://github.com/Yashpatel2311)
 
+---
 
+**Let the RepoGenie reveal the story behind the code.**
